@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sunaroi</title>
+<meta name="description" content="Sunaroi는 일상의 기록을 돕는 작은 앱을 만듭니다. Sunaroi makes small apps that help with everyday records.">
+<meta property="og:title" content="Sunaroi">
+<meta property="og:description" content="일상의 기록을 돕는 작은 앱을 만듭니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sunaroi.github.io/">
+<meta name="theme-color" content="#E53935">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<style>
+  :root {
+    --accent: #E53935;
+    --accent-soft: #FFDAD5;
+    --bg: #FFFBFE;
+    --surface: #FFFFFF;
+    --text: #1C1B1F;
+    --muted: #5F5A5D;
+    --line: #EBE3E2;
+    --shadow: 0 1px 2px rgba(60, 30, 30, 0.06), 0 8px 24px rgba(60, 30, 30, 0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --accent: #FF6F66;
+      --accent-soft: #4A1E1C;
+      --bg: #151314;
+      --surface: #1F1C1D;
+      --text: #ECE6E7;
+      --muted: #A8A1A3;
+      --line: #322D2E;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", Roboto, sans-serif;
+    line-height: 1.65;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+
+  header .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .brand {
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .lang-switch { display: flex; gap: 4px; }
+  .lang-switch button {
+    font: inherit;
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .lang-switch button[aria-pressed="true"] {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--bg);
+  }
+
+  .hero { padding: 72px 0 56px; }
+  .hero h1 {
+    margin: 0 0 12px;
+    font-size: clamp(2.2rem, 7vw, 3.2rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+  .hero p {
+    margin: 0;
+    font-size: clamp(1.05rem, 3.2vw, 1.25rem);
+    color: var(--muted);
+  }
+
+  section { padding: 8px 0 48px; }
+  h2 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 16px;
+  }
+
+  .app {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+  }
+  .app img {
+    flex: none;
+    width: 72px; height: 72px;
+    border-radius: 18px;
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+  }
+  .app h3 { margin: 0; font-size: 1.25rem; letter-spacing: -0.01em; }
+  .app .kind { margin: 2px 0 10px; color: var(--muted); }
+  .app .note {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 14px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    font-size: 0.9rem;
+  }
+  .app .links { margin: 0; }
+  .app .links a { font-weight: 600; text-decoration: none; }
+  .app .links a:hover { text-decoration: underline; }
+
+  .contact a {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .contact a:hover { text-decoration: underline; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 24px 0 40px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 48px 0 40px; }
+    .app { flex-direction: column; gap: 16px; padding: 20px; }
+  }
+
+  /* 언어 전환: 스크립트가 html[data-lang]을 정하면 다른 언어를 숨긴다(스크립트가 없으면 둘 다 보인다) */
+  html[data-lang="ko"] [lang="en"]:not(button),
+  html[data-lang="en"] [lang="ko"]:not(button) { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="./"><span class="dot" aria-hidden="true"></span>Sunaroi</a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-set-lang="ko" lang="ko" aria-pressed="true">한국어</button>
+      <button type="button" data-set-lang="en" lang="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <h1>Sunaroi</h1>
+    <p lang="ko">일상의 기록을 돕는 작은 앱을 만듭니다.</p>
+    <p lang="en">We make small apps that help with everyday records.</p>
+  </div>
+
+  <section aria-labelledby="apps-title">
+    <h2 id="apps-title"><span lang="ko">앱</span><span lang="en">Apps</span></h2>
+    <article class="app">
+      <img src="assets/tedays-icon.png" alt="" width="72" height="72">
+      <div>
+        <h3>TEdays</h3>
+        <p class="kind" lang="ko">생리 주기 기록</p>
+        <p class="kind" lang="en">Period tracker</p>
+        <p class="note" lang="ko">모든 기록은 기기 안에만 저장됩니다.</p>
+        <p class="note" lang="en">All records stay on your device.</p>
+        <p class="links">
+          <a href="https://sunaroi.github.io/tedays-privacy/" lang="ko">개인정보처리방침 →</a>
+          <a href="https://sunaroi.github.io/tedays-privacy/#en" lang="en">Privacy Policy →</a>
+        </p>
+      </div>
+    </article>
+  </section>
+
+  <section class="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title"><span lang="ko">문의</span><span lang="en">Contact</span></h2>
+    <a href="mailto:sunaroi.kr@gmail.com">sunaroi.kr@gmail.com</a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Sunaroi</div>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var buttons = document.querySelectorAll('[data-set-lang]');
+    function setLang(lang) {
+      root.setAttribute('data-lang', lang);
+      root.setAttribute('lang', lang);
+      buttons.forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-set-lang') === lang));
+      });
+    }
+    var stored = null;
+    try { stored = localStorage.getItem('lang'); } catch (e) {}
+    var preferred = (navigator.language || 'ko').toLowerCase().indexOf('ko') === 0 ? 'ko' : 'en';
+    setLang(stored === 'ko' || stored === 'en' ? stored : preferred);
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var lang = b.getAttribute('data-set-lang');
+        setLang(lang);
+        try { localStorage.setItem('lang', lang); } catch (e) {}
+      });
+    });
+  })();
+</script>
+</body>
+</html>
